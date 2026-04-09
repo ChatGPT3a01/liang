@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# liamg - 雙 AI CLI 切換器 (bash wrapper)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+python "$SCRIPT_DIR/liamg.py" "$@"
