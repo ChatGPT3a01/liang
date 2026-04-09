@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-liamg - 雙 AI CLI 切換器
+liang - 雙 AI CLI 切換器
 在同一個 shell 中快速切換 Claude Code 與 Codex CLI
 
 指令：
@@ -10,7 +10,7 @@ liamg - 雙 AI CLI 切換器
   /pwd           顯示目前工作目錄
   /status        顯示兩個 CLI 的版本資訊
   /help          顯示指令列表
-  /exit          離開 liamg
+  /exit          離開 liang
 """
 
 import os
@@ -27,7 +27,7 @@ class C:
     # 品牌色
     CLAUDE  = "\033[38;5;208m"   # 橘色 (Anthropic)
     CODEX   = "\033[38;5;48m"    # 綠色 (OpenAI)
-    LIAMG   = "\033[38;5;141m"   # 紫色
+    LIANG   = "\033[38;5;141m"   # 紫色
     YELLOW  = "\033[33m"
     RED     = "\033[31m"
     CYAN    = "\033[36m"
@@ -35,13 +35,13 @@ class C:
 
 
 BANNER = f"""
-{C.LIAMG}{C.BOLD}
-  ██╗     ██╗ █████╗ ███╗   ███╗ ██████╗
-  ██║     ██║██╔══██╗████╗ ████║██╔════╝
-  ██║     ██║███████║██╔████╔██║██║  ███╗
-  ██║     ██║██╔══██║██║╚██╔╝██║██║   ██║
-  ███████╗██║██║  ██║██║ ╚═╝ ██║╚██████╔╝
-  ╚══════╝╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝
+{C.LIANG}{C.BOLD}
+  ██╗     ██╗ █████╗ ███╗   ██╗ ██████╗
+  ██║     ██║██╔══██╗████╗  ██║██╔════╝
+  ██║     ██║███████║██╔██╗ ██║██║  ███╗
+  ██║     ██║██╔══██║██║╚██╗██║██║   ██║
+  ███████╗██║██║  ██║██║ ╚████║╚██████╔╝
+  ╚══════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝
 {C.RESET}
 {C.DIM}  雙 AI CLI 切換器 — Claude Code × Codex CLI{C.RESET}
 {C.DIM}  ─────────────────────────────────────────{C.RESET}
@@ -57,7 +57,7 @@ HELP_TEXT = f"""
   {C.CYAN}/pwd{C.RESET}             顯示目前工作目錄
   {C.CYAN}/status{C.RESET}          顯示 CLI 版本資訊
   {C.YELLOW}/help{C.RESET}            顯示此說明
-  {C.YELLOW}/exit{C.RESET}            離開 liamg
+  {C.YELLOW}/exit{C.RESET}            離開 liang
 
 {C.BOLD}快捷用法：{C.RESET}
   {C.CLAUDE}/cl 幫我寫一個 FastAPI server{C.RESET}
@@ -66,7 +66,7 @@ HELP_TEXT = f"""
   {C.CODEX}/co fix the bug in main.py{C.RESET}
       → 帶著提示詞直接啟動 Codex CLI
 
-{C.DIM}提示：在 Claude/Codex 裡輸入各自的 exit 指令即可回到 liamg{C.RESET}
+{C.DIM}提示：在 Claude/Codex 裡輸入各自的 exit 指令即可回到 liang{C.RESET}
 """
 
 
@@ -93,7 +93,7 @@ def launch_cli(name: str, cli_path: str, prompt: str = ""):
     label = "Claude Code" if name == "claude" else "Codex CLI"
 
     print(f"\n{color}{C.BOLD}▸ 啟動 {label}...{C.RESET}")
-    print(f"{C.DIM}  (結束後會回到 liamg){C.RESET}\n")
+    print(f"{C.DIM}  (結束後會回到 liang){C.RESET}\n")
 
     cmd = [cli_path]
     if prompt:
@@ -108,7 +108,7 @@ def launch_cli(name: str, cli_path: str, prompt: str = ""):
     except KeyboardInterrupt:
         pass
 
-    print(f"\n{C.LIAMG}▸ 已返回 liamg{C.RESET}\n")
+    print(f"\n{C.LIANG}▸ 已返回 liang{C.RESET}\n")
 
 
 def show_status(claude_path: str | None, codex_path: str | None):
@@ -151,7 +151,7 @@ def main():
         try:
             cwd_short = Path(os.getcwd()).name
             prompt = input(
-                f"{C.LIAMG}liamg{C.RESET} "
+                f"{C.LIANG}liang{C.RESET} "
                 f"{C.DIM}({cwd_short}){C.RESET} "
                 f"{C.BOLD}›{C.RESET} "
             )

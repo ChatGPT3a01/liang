@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🦞 liamg
+# 🦞 liang
 
 ### 雙 AI CLI 切換器 — Claude Code × Codex CLI
 
@@ -18,21 +18,21 @@
 <br>
 
 ```
-  ██╗     ██╗ █████╗ ███╗   ███╗ ██████╗
-  ██║     ██║██╔══██╗████╗ ████║██╔════╝
-  ██║     ██║███████║██╔████╔██║██║  ███╗
-  ██║     ██║██╔══██║██║╚██╔╝██║██║   ██║
-  ███████╗██║██║  ██║██║ ╚═╝ ██║╚██████╔╝
-  ╚══════╝╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝
+  ██╗     ██╗ █████╗ ███╗   ██╗ ██████╗
+  ██║     ██║██╔══██╗████╗  ██║██╔════╝
+  ██║     ██║███████║██╔██╗ ██║██║  ███╗
+  ██║     ██║██╔══██║██║╚██╗██║██║   ██║
+  ███████╗██║██║  ██║██║ ╚████║╚██████╔╝
+  ╚══════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝
 ```
 
 </div>
 
 ---
 
-## 🤔 為什麼需要 liamg？
+## 🤔 為什麼需要 liang？
 
-| 痛點 | liamg 的解法 |
+| 痛點 | liang 的解法 |
 |------|-------------|
 | 每次要開兩個 terminal 切換 AI 工具 | ✅ 一個視窗，`/cl` `/co` 即時切換 |
 | 忘記各 CLI 的啟動指令 | ✅ 統一入口，兩個字母搞定 |
@@ -47,17 +47,17 @@
 
 | 工具 | 安裝指令 | 用途 |
 |------|---------|------|
-| **Python 3.10+** | [python.org](https://www.python.org/downloads/) | 執行 liamg |
+| **Python 3.10+** | [python.org](https://www.python.org/downloads/) | 執行 liang |
 | **Claude Code** | `npm i -g @anthropic-ai/claude-code` | Anthropic AI 助手 |
 | **Codex CLI** | `npm i -g @openai/codex` | OpenAI AI 助手 |
 
-> 💡 liamg 本身**零外部依賴**，只需要 Python 標準庫。
+> 💡 liang 本身**零外部依賴**，只需要 Python 標準庫。
 
 ---
 
 ## 💰 省錢策略：用對工具做對事
 
-liamg 的核心理念：**簡單的交給 Codex（省錢），困難的交給 Claude（品質）**。
+liang 的核心理念：**簡單的交給 Codex（省錢），困難的交給 Claude（品質）**。
 
 | 任務類型 | 推薦 | 指令 | 理由 |
 |----------|------|------|------|
@@ -76,13 +76,13 @@ liamg 的核心理念：**簡單的交給 Codex（省錢），困難的交給 Cl
 ### 🔄 典型工作流範例
 
 ```
-liamg (my-project) › /co 幫我加一個 logger       ← 簡單任務，用 Codex（免費）
+liang (my-project) › /co 幫我加一個 logger       ← 簡單任務，用 Codex（免費）
   ... Codex 完成 ...
 
-liamg (my-project) › /cl 重構整個認證模組         ← 困難任務，用 Claude（強）
+liang (my-project) › /cl 重構整個認證模組         ← 困難任務，用 Claude（強）
   ... Claude 完成 ...
 
-liamg (my-project) › /co review auth.py           ← 審查程式碼，用 Codex（省錢）
+liang (my-project) › /co review auth.py           ← 審查程式碼，用 Codex（省錢）
   ... Codex 完成 ...
 ```
 
@@ -93,43 +93,107 @@ liamg (my-project) › /co review auth.py           ← 審查程式碼，用 Co
 ### 方法一：Git Clone（推薦）
 
 ```bash
-git clone https://github.com/ChatGPT3a01/liamg.git
-cd liamg
+git clone https://github.com/ChatGPT3a01/liang.git
+cd liang
 ```
 
 ### 方法二：手動下載
 
-下載 `liamg.py` 和 `liamg.bat` 放到你喜歡的目錄。
+下載 `liang.py` 和 `liang.bat` 放到你喜歡的目錄。
 
 ### 設定全域指令
 
 #### Windows CMD / PowerShell
 
-將 liamg 目錄加入系統 PATH：
+將 liang 目錄加入系統 PATH：
 
 ```powershell
 # PowerShell（以系統管理員執行）
-$liamgDir = "你的liamg目錄路徑"
+$liangDir = "你的liang目錄路徑"
 $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
-[Environment]::SetEnvironmentVariable('Path', "$userPath;$liamgDir", 'User')
+[Environment]::SetEnvironmentVariable('Path', "$userPath;$liangDir", 'User')
 ```
 
 #### Git Bash / WSL
 
 ```bash
 # 加入 ~/.bashrc
-echo 'alias liamg="python /path/to/liamg.py"' >> ~/.bashrc
+echo 'alias liang="python /path/to/liang.py"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 ---
 
-## 🎮 使用方式
+## 🔐 首次登錄設定
 
-### 啟動 liamg
+> ⚠️ **第一次使用 liang 前，必須先完成兩個 CLI 的登錄！**
+
+### Step 1：登錄 Claude Code
 
 ```bash
-liamg
+claude
+```
+
+首次執行會自動引導你登錄，有兩種方式：
+
+| 方式 | 說明 |
+|------|------|
+| **Anthropic 帳號** | 開啟瀏覽器登入 → 自動取得授權 |
+| **API Key** | 輸入 `sk-ant-...` 金鑰（從 [console.anthropic.com](https://console.anthropic.com/) 取得） |
+
+登錄成功後會看到 Claude Code 的互動介面，輸入 `/exit` 離開。
+
+### Step 2：登錄 Codex CLI
+
+```bash
+codex
+```
+
+首次執行會自動引導你登錄：
+
+| 方式 | 說明 |
+|------|------|
+| **OpenAI 帳號** | 開啟瀏覽器登入 → 自動取得授權 |
+| **API Key** | 設定環境變數 `OPENAI_API_KEY`（從 [platform.openai.com](https://platform.openai.com/api-keys) 取得） |
+
+設定 API Key 的方式：
+
+```bash
+# Windows PowerShell
+$env:OPENAI_API_KEY = "sk-..."
+
+# 永久設定（加入系統環境變數）
+[Environment]::SetEnvironmentVariable('OPENAI_API_KEY', 'sk-...', 'User')
+
+# Git Bash / Linux / macOS
+export OPENAI_API_KEY="sk-..."
+echo 'export OPENAI_API_KEY="sk-..."' >> ~/.bashrc
+```
+
+### Step 3：驗證登錄狀態
+
+啟動 liang 後輸入 `/status`，確認兩個 CLI 都顯示 ✔：
+
+```
+liang (my-project) › /status
+
+  CLI 狀態
+  ────────────────────────────────────────
+  ✔ Claude Code  2.x.x (Claude Code)
+  ✔ Codex CLI    codex-cli 0.x.x
+  ────────────────────────────────────────
+```
+
+> 💡 **登錄只需要做一次**，之後 liang 會自動沿用已儲存的認證。
+
+---
+
+## 🎮 使用方式
+
+### 啟動 liang
+
+```bash
+liang
 ```
 
 ### 可用指令
@@ -144,25 +208,25 @@ liamg
 | `/pwd` | 顯示目前工作目錄 | `/pwd` |
 | `/status` | 顯示 CLI 版本資訊 | `/status` |
 | `/help` | 顯示指令列表 | `/help` |
-| `/exit` | 離開 liamg | `/exit` |
+| `/exit` | 離開 liang | `/exit` |
 
 ### 實際操作流程
 
 ```
-$ liamg
+$ liang
 
   ██╗     ██╗ █████╗ ███╗   ███╗ ██████╗
   ...
 
-liamg (my-project) › /cl              ← 進入 Claude Code
+liang (my-project) › /cl              ← 進入 Claude Code
   Claude > 幫你寫好 FastAPI server...
   Claude > /exit                       ← 離開 Claude
 
-liamg (my-project) › /co              ← 切換到 Codex CLI
+liang (my-project) › /co              ← 切換到 Codex CLI
   Codex > review 剛才的程式碼...
   Codex > exit                         ← 離開 Codex
 
-liamg (my-project) › /exit            ← 離開 liamg
+liang (my-project) › /exit            ← 離開 liang
 ```
 
 ---
@@ -198,10 +262,11 @@ liamg (my-project) › /exit            ← 離開 liamg
 ## 🏗️ 專案結構
 
 ```
-liamg/
-├── liamg.py        # 主程式（Python）
-├── liamg.bat       # Windows CMD 啟動器
-├── liamg           # Git Bash / Linux 啟動器
+liang/
+├── liang.py        # 主程式（Python，零外部依賴）
+├── liang.bat       # Windows CMD / PowerShell 啟動器
+├── liang           # Git Bash / Linux / macOS 啟動器
+├── 作者資訊.png     # 作者資訊圖片
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -229,19 +294,19 @@ liamg/
 <details>
 <summary><b>Q: 可以同時執行兩個 AI 嗎？</b></summary>
 
-liamg 是序列切換模式（一次只跑一個）。如果需要同時執行，可以開兩個終端機分別使用。
+liang 是序列切換模式（一次只跑一個）。如果需要同時執行，可以開兩個終端機分別使用。
 </details>
 
 <details>
 <summary><b>Q: 支援其他 AI CLI 嗎？</b></summary>
 
-目前支援 Claude Code 和 Codex CLI。如需新增其他 CLI（如 Gemini CLI），可以擴展 liamg.py。
+目前支援 Claude Code 和 Codex CLI。如需新增其他 CLI（如 Gemini CLI），可以擴展 liang.py。
 </details>
 
 <details>
-<summary><b>Q: liamg 這個名字是什麼意思？</b></summary>
+<summary><b>Q: liang 這個名字是什麼意思？</b></summary>
 
-Liang（亮）的倒寫 😄，也代表「兩」個 AI 的切換器。
+取自阿「亮」老師的「亮」（Liang）😄，也諧音「兩」— 代表「兩」個 AI 的切換器。
 </details>
 
 ---
@@ -325,7 +390,7 @@ Liang（亮）的倒寫 😄，也代表「兩」個 AI 的切換器。
 
 <br>
 
-[⬆️ 回到頂部](#-liamg)
+[⬆️ 回到頂部](#-liang)
 
 ---
 
