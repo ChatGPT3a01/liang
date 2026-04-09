@@ -46,25 +46,36 @@ BANNER = f"""
 {C.DIM}  雙 AI CLI 切換器 — Claude Code × Codex CLI{C.RESET}
 {C.DIM}  ─────────────────────────────────────────{C.RESET}
   {C.CLAUDE}▸ /cl{C.RESET}  Claude Code    {C.CODEX}▸ /co{C.RESET}  Codex CLI
-  {C.CYAN}▸ /help{C.RESET} 指令列表      {C.YELLOW}▸ /exit{C.RESET} 離開
+  {C.CYAN}▸ /?{C.RESET}   指令列表      {C.YELLOW}▸ /exit{C.RESET} 離開
 """
 
 HELP_TEXT = f"""
-{C.BOLD}可用指令：{C.RESET}
-  {C.CLAUDE}/cl [prompt]{C.RESET}     啟動 Claude Code（互動模式，或帶提示詞）
-  {C.CODEX}/co [prompt]{C.RESET}     啟動 Codex CLI（互動模式，或帶提示詞）
-  {C.CYAN}/cd <path>{C.RESET}       切換工作目錄
-  {C.CYAN}/pwd{C.RESET}             顯示目前工作目錄
-  {C.CYAN}/status{C.RESET}          顯示 CLI 版本資訊
-  {C.YELLOW}/help{C.RESET}            顯示此說明
-  {C.YELLOW}/exit{C.RESET}            離開 liang
+{C.LIANG}{C.BOLD}╔══════════════════════════════════════════════╗
+║              liang 指令列表                  ║
+╚══════════════════════════════════════════════╝{C.RESET}
 
-{C.BOLD}快捷用法：{C.RESET}
-  {C.CLAUDE}/cl 幫我寫一個 FastAPI server{C.RESET}
-      → 帶著提示詞直接啟動 Claude Code
+{C.BOLD}🤖 AI 切換：{C.RESET}
+  {C.CLAUDE}/cl{C.RESET}              啟動 Claude Code（互動模式）
+  {C.CLAUDE}/cl <提示詞>{C.RESET}     帶提示詞啟動 Claude（如：/cl 幫我寫 API）
+  {C.CODEX}/co{C.RESET}              啟動 Codex CLI（互動模式）
+  {C.CODEX}/co <提示詞>{C.RESET}     帶提示詞啟動 Codex（如：/co fix bug）
 
-  {C.CODEX}/co fix the bug in main.py{C.RESET}
-      → 帶著提示詞直接啟動 Codex CLI
+{C.BOLD}📂 目錄操作：{C.RESET}
+  {C.CYAN}/cd <路徑>{C.RESET}        切換工作目錄
+  {C.CYAN}/pwd{C.RESET}              顯示目前工作目錄
+
+{C.BOLD}ℹ️  系統資訊：{C.RESET}
+  {C.CYAN}/status{C.RESET}           顯示 Claude / Codex 版本與安裝狀態
+  {C.CYAN}/?, /help{C.RESET}         顯示此指令列表
+
+{C.BOLD}🚪 離開：{C.RESET}
+  {C.YELLOW}/exit, /quit, /q{C.RESET}  離開 liang
+
+{C.LIANG}─────────────────────────────────────────────{C.RESET}
+{C.BOLD}💡 省錢小提醒：{C.RESET}
+  🟢 簡單任務 → {C.CODEX}/co{C.RESET}（Codex 有免費額度，token 便宜）
+  🔴 困難任務 → {C.CLAUDE}/cl{C.RESET}（Claude 推理能力強）
+{C.LIANG}─────────────────────────────────────────────{C.RESET}
 
 {C.DIM}提示：在 Claude/Codex 裡輸入各自的 exit 指令即可回到 liang{C.RESET}
 """
@@ -168,7 +179,7 @@ def main():
             print(f"\n{C.YELLOW}👋 再見！{C.RESET}")
             break
 
-        elif line == "/help":
+        elif line in ("/help", "/?", "/h"):
             print(HELP_TEXT)
 
         elif line == "/pwd":
@@ -201,7 +212,7 @@ def main():
             launch_cli("codex", codex_path, extra)
 
         else:
-            print(f"  {C.DIM}未知指令。輸入 /help 查看可用指令{C.RESET}")
+            print(f"  {C.DIM}未知指令。輸入 /? 查看可用指令{C.RESET}")
 
 
 if __name__ == "__main__":
