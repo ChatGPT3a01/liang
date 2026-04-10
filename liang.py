@@ -5,7 +5,9 @@ liang - 雙 AI CLI 切換器
 
 指令：
   /cl [prompt]   啟動 Claude Code（可選帶入提示詞）
+  /cld [prompt]  啟動 Claude Code 全自動模式（跳過權限確認）
   /co [prompt]   啟動 Codex CLI（可選帶入提示詞）
+  /cod [prompt]  啟動 Codex CLI 全自動模式（跳過審核與沙盒）
   /cd <path>     切換工作目錄
   /pwd           顯示目前工作目錄
   /status        顯示兩個 CLI 的版本資訊
@@ -46,6 +48,7 @@ BANNER = f"""
 {C.DIM}  雙 AI CLI 切換器 — Claude Code × Codex CLI{C.RESET}
 {C.DIM}  ─────────────────────────────────────────{C.RESET}
   {C.CLAUDE}▸ /cl{C.RESET}  Claude Code    {C.CODEX}▸ /co{C.RESET}  Codex CLI
+  {C.CLAUDE}▸ /cld{C.RESET} Claude 全自動  {C.CODEX}▸ /cod{C.RESET} Codex 全自動
   {C.CYAN}▸ /?{C.RESET}   指令列表      {C.YELLOW}▸ /exit{C.RESET} 離開
 """
 
@@ -57,8 +60,12 @@ HELP_TEXT = f"""
 {C.BOLD}🤖 AI 切換：{C.RESET}
   {C.CLAUDE}/cl{C.RESET}              啟動 Claude Code（互動模式）
   {C.CLAUDE}/cl <提示詞>{C.RESET}     帶提示詞啟動 Claude（如：/cl 幫我寫 API）
+  {C.CLAUDE}/cld{C.RESET}             啟動 Claude Code 全自動模式（跳過權限確認）
+  {C.CLAUDE}/cld <提示詞>{C.RESET}    帶提示詞啟動 Claude 全自動（如：/cld 重構所有測試）
   {C.CODEX}/co{C.RESET}              啟動 Codex CLI（互動模式）
   {C.CODEX}/co <提示詞>{C.RESET}     帶提示詞啟動 Codex（如：/co fix bug）
+  {C.CODEX}/cod{C.RESET}             啟動 Codex CLI 全自動模式（跳過審核與沙盒）
+  {C.CODEX}/cod <提示詞>{C.RESET}    帶提示詞啟動 Codex 全自動（如：/cod 修好所有 lint）
 
 {C.BOLD}📂 目錄操作：{C.RESET}
   {C.CYAN}/cd <路徑>{C.RESET}        切換工作目錄
@@ -75,6 +82,10 @@ HELP_TEXT = f"""
 {C.BOLD}💡 省錢小提醒：{C.RESET}
   🟢 簡單任務 → {C.CODEX}/co{C.RESET}（Codex 有免費額度，token 便宜）
   🔴 困難任務 → {C.CLAUDE}/cl{C.RESET}（Claude 推理能力強）
+
+{C.BOLD}⚡ 全自動模式：{C.RESET}
+  {C.CLAUDE}/cld{C.RESET} = Claude + 跳過權限確認 + 無閃爍
+  {C.CODEX}/cod{C.RESET} = Codex + 跳過審核與沙盒
 {C.LIANG}─────────────────────────────────────────────{C.RESET}
 
 {C.DIM}提示：在 Claude/Codex 裡輸入各自的 exit 指令即可回到 liang{C.RESET}
@@ -116,6 +127,34 @@ def launch_cli(name: str, cli_path: str, prompt: str = ""):
 
     try:
         subprocess.run(cmd, cwd=os.getcwd())
+    except KeyboardInterrupt:
+        pass
+
+    print(f"\n{C.LIANG}▸ 已返回 liang{C.RESET}\n")
+
+
+def launch_cli_dangerous(name: str, cli_path: str, prompt: str = ""):
+    """啟動指定的 CLI（全自動模式，跳過所有權限確認）"""
+    color = C.CLAUDE if name == "claude" else C.CODEX
+    label = "Claude Code" if name == "claude" else "Codex CLI"
+
+    print(f"\n{color}{C.BOLD}▸ 啟動 {label}（⚡ 全自動模式）...{C.RESET}")
+    print(f"{C.DIM}  (結束後會回到 liang){C.RESET}\n")
+
+    env = os.environ.copy()
+
+    if name == "claude":
+        env["CLAUDE_CODE_NO_FLICKER"] = "1"
+        cmd = [cli_path, "--dangerously-skip-permissions"]
+        if prompt:
+            cmd.extend(["-p", prompt])
+    else:
+        cmd = [cli_path, "--dangerously-bypass-approvals-and-sandbox"]
+        if prompt:
+            cmd.append(prompt)
+
+    try:
+        subprocess.run(cmd, cwd=os.getcwd(), env=env)
     except KeyboardInterrupt:
         pass
 
@@ -196,6 +235,20 @@ def main():
 
         elif line == "/status":
             show_status(claude_path, codex_path)
+
+        elif line.startswith("/cld"):
+            if not claude_path:
+                print(f"  {C.RED}Claude Code 未安裝。請執行 npm i -g @anthropic-ai/claude-code{C.RESET}")
+                continue
+            extra = line[4:].strip()
+            launch_cli_dangerous("claude", claude_path, extra)
+
+        elif line.startswith("/cod"):
+            if not codex_path:
+                print(f"  {C.RED}Codex CLI 未安裝。請執行 npm i -g @openai/codex{C.RESET}")
+                continue
+            extra = line[4:].strip()
+            launch_cli_dangerous("codex", codex_path, extra)
 
         elif line.startswith("/cl"):
             if not claude_path:
